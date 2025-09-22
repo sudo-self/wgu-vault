@@ -1,608 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Personal Vault (Local & Encrypted)</title>
-
-  <!doctype html>
-  <html lang="en">
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-      <link rel="icon" href="favicon.ico" />
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="apple-touch-icon.png"
-      />
-
-      <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-      <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
-      <link rel="mask-icon" href="icon-192-maskable.png" color="#60a5fa" />
-      <link rel="mask-icon" href="icon-512-maskable.png" color="#60a5fa" />
-
-      <meta name="theme-color" content="#0f1724" />
-
-      <title>Personal Vault (Local & Encrypted)</title>
-      <style>
-        :root {
-          --bg: #0f1724;
-          --card: #0b1220;
-          --muted: #94a3b8;
-          --accent: #60a5fa;
-          --accent2: #34d399;
-          --danger: #fb7185;
-          --glass: rgba(255, 255, 255, 0.04);
-          font-family:
-            Inter,
-            ui-sans-serif,
-            system-ui,
-            -apple-system,
-            "Segoe UI",
-            Roboto,
-            "Helvetica Neue",
-            Arial;
-        }
-        html,
-        body {
-          height: 100%;
-          margin: 0;
-          background: linear-gradient(180deg, #071023 0%, #0b1220 60%);
-          color: #e6eef8;
-        }
-        .wrap {
-          max-width: 980px;
-          margin: 28px auto;
-          padding: 24px;
-        }
-        header {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          margin-bottom: 18px;
-        }
-        .logo {
-          width: 56px;
-          height: 56px;
-          border-radius: 12px;
-          background: linear-gradient(135deg, var(--accent), var(--accent2));
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 700;
-          color: #012;
-        }
-        h1 {
-          margin: 0;
-          font-size: 20px;
-        }
-        p.lead {
-          margin: 4px 0 0;
-          color: var(--muted);
-          font-size: 13px;
-        }
-
-        .controls {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          margin: 16px 0 24px;
-        }
-        .btn {
-          background: var(--glass);
-          border: 1px solid rgba(255, 255, 255, 0.04);
-          color: var(--muted);
-          padding: 8px 12px;
-          border-radius: 10px;
-          cursor: pointer;
-          font-weight: 600;
-        }
-        .btn:hover {
-          filter: brightness(1.06);
-        }
-        .btn.primary {
-          background: linear-gradient(90deg, var(--accent), var(--accent2));
-          color: #012;
-          border: none;
-        }
-        .btn.ghost {
-          background: transparent;
-          border: 1px dashed rgba(255, 255, 255, 0.04);
-        }
-        .btn.danger {
-          background: linear-gradient(90deg, #fb7185, #f97316);
-          color: #081217;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 14px;
-        }
-        .card {
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.03);
-          padding: 14px;
-          border-radius: 12px;
-          position: relative;
-        }
-        .card h3 {
-          margin: 0;
-          font-size: 14px;
-        }
-        .meta {
-          margin-top: 8px;
-          display: flex;
-          gap: 8px;
-          align-items: center;
-        }
-        .value {
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-          background: #061124;
-          padding: 10px;
-          border-radius: 8px;
-          white-space: pre-wrap;
-          word-break: break-all;
-          color: #dbeafe;
-        }
-        .value.masked {
-          filter: blur(6px) saturate(0.5);
-          opacity: 0.9;
-        }
-        .row {
-          display: flex;
-          gap: 8px;
-          align-items: center;
-          justify-content: space-between;
-          margin-top: 10px;
-        }
-        .small {
-          font-size: 12px;
-          color: var(--muted);
-        }
-        .iconbtn {
-          background: transparent;
-          border: 1px solid rgba(255, 255, 255, 0.03);
-          padding: 6px;
-          border-radius: 8px;
-          color: var(--muted);
-          cursor: pointer;
-        }
-        .iconbtn:hover {
-          background: rgba(255, 255, 255, 0.01);
-        }
-        form.add {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          padding: 12px;
-          background: rgba(255, 255, 255, 0.01);
-          border-radius: 12px;
-        }
-        input,
-        textarea,
-        select {
-          background: #071427;
-          border: 1px solid rgba(255, 255, 255, 0.03);
-          padding: 8px;
-          border-radius: 8px;
-          color: #dbeafe;
-          outline: none;
-        }
-        label {
-          font-size: 13px;
-          color: var(--muted);
-        }
-        footer {
-          margin-top: 20px;
-          color: var(--muted);
-          font-size: 13px;
-          text-align: center;
-        }
-        .hint {
-          font-size: 12px;
-          color: var(--muted);
-          margin-top: 8px;
-        }
-        .flexrow {
-          display: flex;
-          gap: 8px;
-          align-items: center;
-        }
-        .file {
-          display: none;
-        }
-        .notification {
-          position: fixed;
-          top: 16px;
-          right: 16px;
-          padding: 10px 16px;
-          border-radius: 8px;
-          background: var(--accent);
-          color: #012;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-          display: none;
-          z-index: 1000;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="wrap">
-        <header>
-          <div class="logo">WGU</div>
-          <div>
-            <h1>Jroper20@my.wgu.edu</h1>
-            <p class="lead">Student ID: 012937706</p>
-          </div>
-        </header>
-
-        <div class="controls">
-          <button class="btn primary" id="btn-new">+ New Entry</button>
-          <button class="btn" id="btn-save">
-            Save (Encrypt → localStorage)
-          </button>
-          <button class="btn" id="btn-load">
-            Load (Decrypt from localStorage)
-          </button>
-          <button class="btn ghost" id="btn-export">
-            Export Encrypted File
-          </button>
-          <label class="btn ghost">
-            Import Encrypted
-            <input type="file" id="import-file" class="file" accept=".json" />
-          </label>
-          <div style="margin-left: auto" class="flexrow">
-            <input id="master-pass" placeholder="Enter passphrase" />
-            <button class="btn" id="btn-clear">Clear Vault</button>
-          </div>
-        </div>
-
-        <div id="editor-area" style="display: none; margin-bottom: 12px">
-          <form class="add" id="entry-form">
-            <label>Label</label>
-            <input id="entry-label" required />
-            <label>Username / Email</label>
-            <input id="entry-username" />
-            <label>Value (password, pin, notes)</label>
-            <textarea id="entry-value" rows="3"></textarea>
-            <div class="flexrow" style="justify-content: space-between">
-              <button class="btn primary" id="btn-addsave" type="submit">
-                Save Entry
-              </button>
-              <button class="btn" id="btn-cancel" type="button">Cancel</button>
-              <label class="small"
-                >Visibility:
-                <input type="checkbox" id="toggle-mask" checked /> mask
-                values</label
-              >
-            </div>
-          </form>
-        </div>
-
-        <div id="vault" class="grid"></div>
-
-        <footer>
-          <div class="hint">
-            Data stays in your browser/local machine. Use a strong passphrase.
-            Exported file is encrypted and safe to back up.
-          </div>
-          <div class="hint">
-            Tip: Use your OS password manager for long-term credential storage.
-          </div>
-        </footer>
-      </div>
-
-      <div id="notify" class="notification"></div>
-
-      <script defer>
-        const VAULT_KEY = "personal_vault_enc_v1";
-        const encoder = new TextEncoder(),
-          decoder = new TextDecoder();
-        let vault = { entries: [], meta: { version: 1 } },
-          editingId = null;
-
-        const dom = {
-          vault: document.getElementById("vault"),
-          btnNew: document.getElementById("btn-new"),
-          editorArea: document.getElementById("editor-area"),
-          entryForm: document.getElementById("entry-form"),
-          entryLabel: document.getElementById("entry-label"),
-          entryUsername: document.getElementById("entry-username"),
-          entryValue: document.getElementById("entry-value"),
-          btnCancel: document.getElementById("btn-cancel"),
-          toggleMask: document.getElementById("toggle-mask"),
-          master: document.getElementById("master-pass"),
-          btnSave: document.getElementById("btn-save"),
-          btnLoad: document.getElementById("btn-load"),
-          btnExport: document.getElementById("btn-export"),
-          importFile: document.getElementById("import-file"),
-          btnClear: document.getElementById("btn-clear"),
-          btnAddSave: document.getElementById("btn-addsave"),
-        };
-        function uid() {
-          return (
-            Date.now().toString(36) + Math.random().toString(36).slice(2, 9)
-          );
-        }
-        function notify(msg) {
-          const n = document.getElementById("notify");
-          n.textContent = msg;
-          n.style.display = "block";
-          setTimeout(() => (n.style.display = "none"), 2000);
-        }
-
-        /* ---------- WebCrypto ---------- */
-        async function deriveKeyFromPassphrase(pass, salt) {
-          const pwKey = await crypto.subtle.importKey(
-            "raw",
-            encoder.encode(pass),
-            "PBKDF2",
-            false,
-            ["deriveKey"],
-          );
-          return crypto.subtle.deriveKey(
-            { name: "PBKDF2", salt: salt, iterations: 200000, hash: "SHA-256" },
-            pwKey,
-            { name: "AES-GCM", length: 256 },
-            false,
-            ["encrypt", "decrypt"],
-          );
-        }
-        async function encryptObject(obj, pass) {
-          const salt = crypto.getRandomValues(new Uint8Array(16));
-          const iv = crypto.getRandomValues(new Uint8Array(12));
-          const key = await deriveKeyFromPassphrase(pass, salt);
-          const ct = await crypto.subtle.encrypt(
-            { name: "AES-GCM", iv },
-            key,
-            encoder.encode(JSON.stringify(obj)),
-          );
-          return {
-            salt: arrayBufferToBase64(salt),
-            iv: arrayBufferToBase64(iv),
-            data: arrayBufferToBase64(ct),
-          };
-        }
-        async function decryptObject(enc, pass) {
-          try {
-            const salt = base64ToArrayBuffer(enc.salt),
-              iv = base64ToArrayBuffer(enc.iv),
-              ct = base64ToArrayBuffer(enc.data);
-            const key = await deriveKeyFromPassphrase(
-              pass,
-              new Uint8Array(salt),
-            );
-            const plain = await crypto.subtle.decrypt(
-              { name: "AES-GCM", iv: new Uint8Array(iv) },
-              key,
-              ct,
-            );
-            return JSON.parse(decoder.decode(plain));
-          } catch (e) {
-            throw new Error(
-              "Decryption failed — bad passphrase or corrupted data.",
-            );
-          }
-        }
-        function arrayBufferToBase64(buf) {
-          return btoa(String.fromCharCode(...new Uint8Array(buf)));
-        }
-        function base64ToArrayBuffer(base64) {
-          return Uint8Array.from(atob(base64), (c) => c.charCodeAt(0)).buffer;
-        }
-
-        /* ---------- Vault UI ---------- */
-        function escapeHtml(s = "") {
-          return String(s)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;");
-        }
-        function render() {
-          dom.vault.innerHTML = "";
-          if (!vault.entries.length) {
-            dom.vault.innerHTML =
-              '<div style="grid-column:1/-1;color:var(--muted);padding:18px;border-radius:12px;background:rgba(255,255,255,0.01)">No entries yet — click "New Entry" to add.</div>';
-            return;
-          }
-          for (const e of vault.entries.slice().reverse()) {
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-      <h3>${escapeHtml(e.label || "(no label)")}</h3>
-      <div class="meta small">${escapeHtml(e.username || "")}</div>
-      <div class="row"><div class="value ${dom.toggleMask.checked ? "masked" : ""}" id="v-${e.id}">${escapeHtml(e.value || "")}</div></div>
-      <div class="row" style="margin-top:12px">
-        <div class="small">${new Date(e.created).toLocaleString()}</div>
-        <div style="display:flex;gap:8px">
-          <button class="iconbtn" data-copy="${e.id}" title="Copy">Copy</button>
-          <button class="iconbtn" data-reveal="${e.id}" title="Toggle reveal">Show</button>
-          <button class="iconbtn" data-edit="${e.id}" title="Edit">Edit</button>
-          <button class="iconbtn" data-delete="${e.id}" title="Delete" style="color:var(--danger)">Delete</button>
-        </div>
-      </div>`;
-            dom.vault.appendChild(card);
-          }
-        }
-
-        /* ---------- UI events ---------- */
-        dom.btnNew.addEventListener("click", () => {
-          editingId = null;
-          dom.entryLabel.value = "";
-          dom.entryUsername.value = "";
-          dom.entryValue.value = "";
-          dom.editorArea.style.display = "block";
-          dom.entryLabel.focus();
-        });
-        dom.btnCancel.addEventListener("click", () => {
-          dom.editorArea.style.display = "none";
-        });
-        dom.entryForm.addEventListener("submit", (ev) => {
-          ev.preventDefault();
-          const label = dom.entryLabel.value.trim(),
-            username = dom.entryUsername.value.trim(),
-            value = dom.entryValue.value;
-          if (!label) {
-            notify("Label required");
-            dom.entryLabel.focus();
-            return;
-          }
-          if (editingId) {
-            const it = vault.entries.find((x) => x.id === editingId);
-            if (it) {
-              it.label = label;
-              it.username = username;
-              it.value = value;
-              it.updated = Date.now();
-            }
-            editingId = null;
-          } else
-            vault.entries.push({
-              id: uid(),
-              label,
-              username,
-              value,
-              created: Date.now(),
-            });
-          dom.editorArea.style.display = "none";
-          render();
-        });
-
-        dom.vault.addEventListener("click", async (ev) => {
-          const c = ev.target;
-          if (c.dataset.copy) {
-            const id = c.dataset.copy,
-              ent = vault.entries.find((x) => x.id === id);
-            if (ent) {
-              await navigator.clipboard.writeText(ent.value || "");
-              notify("Copied");
-            }
-          } else if (c.dataset.reveal) {
-            const id = c.dataset.reveal,
-              el = document.getElementById("v-" + id);
-            if (el) {
-              el.classList.toggle("masked");
-              c.textContent = el.classList.contains("masked") ? "Show" : "Hide";
-            }
-          } else if (c.dataset.edit) {
-            const id = c.dataset.edit,
-              it = vault.entries.find((x) => x.id === id);
-            if (it) {
-              editingId = id;
-              dom.entryLabel.value = it.label;
-              dom.entryUsername.value = it.username || "";
-              dom.entryValue.value = it.value || "";
-              dom.editorArea.style.display = "block";
-              dom.entryLabel.focus();
-            }
-          } else if (c.dataset.delete) {
-            const id = c.dataset.delete;
-            if (confirm("Delete this entry?")) {
-              vault.entries = vault.entries.filter((x) => x.id !== id);
-              render();
-            }
-          }
-        });
-
-        dom.toggleMask.addEventListener("change", () => render());
-
-        dom.btnSave.addEventListener("click", async () => {
-          const pass = dom.master.value;
-          if (!pass) {
-            notify("Enter passphrase");
-            return;
-          }
-          try {
-            const enc = await encryptObject(vault, pass);
-            localStorage.setItem(VAULT_KEY, JSON.stringify(enc));
-            notify("Vault saved");
-          } catch (e) {
-            notify("Save failed");
-          }
-        });
-        dom.btnLoad.addEventListener("click", async () => {
-          const pass = dom.master.value;
-          if (!pass) {
-            notify("Enter passphrase");
-            return;
-          }
-          try {
-            const raw = localStorage.getItem(VAULT_KEY);
-            if (!raw) {
-              notify("No vault found");
-              return;
-            }
-            const enc = JSON.parse(raw);
-            vault = await decryptObject(enc, pass);
-            render();
-            notify("Vault loaded");
-          } catch (e) {
-            notify("Load failed");
-          }
-        });
-        dom.btnExport.addEventListener("click", async () => {
-          const pass = dom.master.value;
-          if (!pass) {
-            notify("Enter passphrase");
-            return;
-          }
-          try {
-            const enc = await encryptObject(vault, pass);
-            const blob = new Blob([JSON.stringify(enc)], {
-              type: "application/json",
-            });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "vault.enc.json";
-            a.click();
-            URL.revokeObjectURL(url);
-          } catch (e) {
-            notify("Export failed");
-          }
-        });
-        dom.importFile.addEventListener("change", async (ev) => {
-          const f = ev.target.files?.[0];
-          if (!f) return;
-          const txt = await f.text();
-          try {
-            const enc = JSON.parse(txt);
-            const pass = dom.master.value;
-            if (!pass) {
-              notify("Enter passphrase");
-              return;
-            }
-            vault = await decryptObject(enc, pass);
-            render();
-            notify("Imported vault");
-          } catch (e) {
-            notify("Import failed");
-          }
-        });
-        dom.btnClear.addEventListener("click", () => {
-          if (confirm("Clear vault in memory?")) {
-            vault = { entries: [], meta: { version: 1 } };
-            render();
-          }
-        });
-
-        render();
-
-    
-      (function seedExample() {
-  if (vault.entries.length) return;
-  vault.entries.push({
-    id: uid(),
-    label: "Example Entry",
-    username: "example@domain.com",
-    value: "••••••••",
-    created: Date.now(),
-  });
-  render();
-})();
-
-      </script>
-    </body>
-  </html>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+  <link rel="mask-icon" href="icon-192-maskable.png" color="#60a5fa" />
+  <link rel="mask-icon" href="icon-512-maskable.png" color="#60a5fa" />
+  <meta name="theme-color" content="#0f1724" />
+  <style>
+    :root {
+      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#60a5fa; --accent2:#34d399;
+      --danger:#fb7185; --glass: rgba(255,255,255,0.04);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%; margin:0; background:linear-gradient(180deg,#071023 0%,#0b1220 60%); color:#e6eef8;}
+    .wrap{max-width:980px; margin:28px auto; padding:24px;}
+    header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#012;}
+    h1{margin:0;font-size:20px;}
+    p.lead{margin:4px 0 0;color:var(--muted);font-size:13px;}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 24px;}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;}
+    .btn:hover{filter:brightness(1.06);}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#012;border:none;}
+    .btn.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04);}
+    .btn.danger{background:linear-gradient(90deg,#fb7185,#f97316);color:#081217;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;}
+    .card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:14px;border-radius:12px;position:relative;}
+    .card h3{margin:0;font-size:14px;}
+    .meta{margin-top:8px;display:flex;gap:8px;align-items:center;}
+    .value{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#061124;padding:10px;border-radius:8px;white-space:pre-wrap;word-break:break-all;color:#dbeafe;}
+    .value.masked{filter:blur(6px) saturate(0.5);opacity:0.9;}
+    .row{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:10px;}
+    .small{font-size:12px;color:var(--muted);}
+    .iconbtn{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:6px;border-radius:8px;color:var(--muted);cursor:pointer;}
+    .iconbtn:hover{background:rgba(255,255,255,0.01);}
+    form.add{display:flex;flex-direction:column;gap:8px;padding:12px;background:rgba(255,255,255,0.01);border-radius:12px;}
+    input,textarea,select{background:#071427;border:1px solid rgba(255,255,255,0.03);padding:8px;border-radius:8px;color:#dbeafe;outline:none;}
+    label{font-size:13px;color:var(--muted);}
+    footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center;}
+    .hint{font-size:12px;color:var(--muted);margin-top:8px;}
+    .flexrow{display:flex;gap:8px;align-items:center;}
+    .file{display:none;}
+    .notification{position:fixed;top:16px;right:16px;padding:10px 16px;border-radius:8px;background:var(--accent);color:#012;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:none;z-index:1000;}
+    footer a{color:var(--accent2);text-decoration:underline;}
+  </style>
 </head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">WGU</div>
+    <div>
+      <h1>Jroper20@my.wgu.edu</h1>
+      <p class="lead">Student ID: 012937706</p>
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn primary" id="btn-new">+ New Entry</button>
+    <button class="btn" id="btn-save">Save (Encrypt → localStorage)</button>
+    <button class="btn" id="btn-load">Load (Decrypt from localStorage)</button>
+    <button class="btn ghost" id="btn-export">Export Encrypted File</button>
+    <label class="btn ghost">
+      Import Encrypted
+      <input type="file" id="import-file" class="file" accept=".json" />
+    </label>
+    <div style="margin-left:auto" class="flexrow">
+      <input id="master-pass" placeholder="Enter passphrase" />
+      <button class="btn" id="btn-clear">Clear Vault</button>
+    </div>
+  </div>
+
+  <div id="editor-area" style="display:none;margin-bottom:12px">
+    <form class="add" id="entry-form">
+      <label>Label</label>
+      <input id="entry-label" required />
+      <label>Username / Email</label>
+      <input id="entry-username" />
+      <label>Value (password, pin, notes)</label>
+      <textarea id="entry-value" rows="3"></textarea>
+      <div class="flexrow" style="justify-content:space-between">
+        <button class="btn primary" id="btn-addsave" type="submit">Save Entry</button>
+        <button class="btn" id="btn-cancel" type="button">Cancel</button>
+        <label class="small">Visibility: <input type="checkbox" id="toggle-mask" checked /> mask values</label>
+      </div>
+    </form>
+  </div>
+
+  <div id="vault" class="grid"></div>
+
+  <footer>
+    <div class="hint">Data stays in your browser/local machine. Use a strong passphrase. Exported file is encrypted and safe to back up.</div>
+    <div class="hint">Tip: Use your OS password manager for long-term credential storage.</div>
+    <div style="margin-top:8px;">
+      <a href="https://sudo-self.github.io/wgu-vault/" target="_blank">Visit GitHub Pages</a>
+    </div>
+  </footer>
+</div>
+
+<div id="notify" class="notification"></div>
+
+<script defer>
+const VAULT_KEY="personal_vault_enc_v1";
+const encoder=new TextEncoder(),decoder=new TextDecoder();
+let vault={entries:[],meta:{version:1}},editingId=null;
+const dom={
+  vault:document.getElementById("vault"),
+  btnNew:document.getElementById("btn-new"),
+  editorArea:document.getElementById("editor-area"),
+  entryForm:document.getElementById("entry-form"),
+  entryLabel:document.getElementById("entry-label"),
+  entryUsername:document.getElementById("entry-username"),
+  entryValue:document.getElementById("entry-value"),
+  btnCancel:document.getElementById("btn-cancel"),
+  toggleMask:document.getElementById("toggle-mask"),
+  master:document.getElementById("master-pass"),
+  btnSave:document.getElementById("btn-save"),
+  btnLoad:document.getElementById("btn-load"),
+  btnExport:document.getElementById("btn-export"),
+  importFile:document.getElementById("import-file"),
+  btnClear:document.getElementById("btn-clear"),
+  btnAddSave:document.getElementById("btn-addsave"),
+};
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,9);}
+function notify(msg){const n=document.getElementById("notify");n.textContent=msg;n.style.display="block";setTimeout(()=>n.style.display="none",2000);}
+async function deriveKeyFromPassphrase(pass,salt){const pwKey=await crypto.subtle.importKey("raw",encoder.encode(pass),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:200000,hash:"SHA-256"},pwKey,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);}
+async function encryptObject(obj,pass){const salt=crypto.getRandomValues(new Uint8Array(16));const iv=crypto.getRandomValues(new Uint8Array(12));const key=await deriveKeyFromPassphrase(pass,salt);const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,encoder.encode(JSON.stringify(obj)));return{salt:arrayBufferToBase64(salt),iv:arrayBufferToBase64(iv),data:arrayBufferToBase64(ct)};}
+async function decryptObject(enc,pass){try{const salt=base64ToArrayBuffer(enc.salt),iv=base64ToArrayBuffer(enc.iv),ct=base64ToArrayBuffer(enc.data);const key=await deriveKeyFromPassphrase(pass,new Uint8Array(salt));const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:new Uint8Array(iv)},key,ct);return JSON.parse(decoder.decode(plain));}catch(e){throw new Error("Decryption failed — bad passphrase or corrupted data.");}}
+function arrayBufferToBase64(buf){return btoa(String.fromCharCode(...new Uint8Array(buf)));}
+function base64ToArrayBuffer(base64){return Uint8Array.from(atob(base64),c=>c.charCodeAt(0)).buffer;}
+function escapeHtml(s=""){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
+function render(){
+  dom.vault.innerHTML="";
+  if(!vault.entries.length){dom.vault.innerHTML='<div style="grid-column:1/-1;color:var(--muted);padding:18px;border-radius:12px;background:rgba(255,255,255,0.01)">No entries yet — click "New Entry" to add.</div>';return;}
+  for(const e of vault.entries.slice().reverse()){
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`<h3>${escapeHtml(e.label||"(no label)")}</h3><div class="meta small">${escapeHtml(e.username||"")}</div><div class="row"><div class="value ${dom.toggleMask.checked?"masked":""}" id="v-${e.id}">${escapeHtml(e.value||"")}</div></div><div class="row" style="margin-top:12px"><div class="small">${new Date(e.created).toLocaleString()}</div><div style="display:flex;gap:8px"><button class="iconbtn" data-copy="${e.id}" title="Copy">Copy</button><button class="iconbtn" data-reveal="${e.id}" title="Toggle reveal">Show</button><button class="iconbtn" data-edit="${e.id}" title="Edit">Edit</button><button class="iconbtn" data-delete="${e.id}" title="Delete" style="color:var(--danger)">Delete</button></div></div>`;
+    dom.vault.appendChild(card);
+  }
+}
+dom.btnNew.addEventListener("click",()=>{editingId=null;dom.entryLabel.value="";dom.entryUsername.value="";dom.entryValue.value="";dom.editorArea.style.display="block";dom.entryLabel.focus();});
+dom.btnCancel.addEventListener("click",()=>{dom.editorArea.style.display="none";});
+dom.entryForm.addEventListener("submit",(ev)=>{ev.preventDefault();const label=dom.entryLabel.value.trim(),username=dom.entryUsername.value.trim(),value=dom.entryValue.value;if(!label){notify("Label required");dom.entryLabel.focus();return;}if(editingId){const it=vault.entries.find(x=>x.id===editingId);if(it){it.label=label;it.username=username;it.value=value;it.updated=Date.now();}editingId=null;}else vault.entries.push({id:uid(),label,username,value,created:Date.now()});dom.editorArea.style.display="none";render();});
+dom.vault.addEventListener("click",async(ev)=>{const c=ev.target;if(c.dataset.copy){const id=c.dataset.copy,ent=vault.entries.find(x=>x.id===id);if(ent){await navigator.clipboard.writeText(ent.value||"");notify("Copied");}}else if(c.dataset.reveal){const id=c.dataset.reveal,el=document.getElementById("v-"+id);if(el){el.classList.toggle("masked");c.textContent=el.classList.contains("masked")?"Show":"Hide";}}else if(c.dataset.edit){const id=c.dataset.edit,it=vault.entries.find(x=>x.id===id);if(it){editingId=id;dom.entryLabel.value=it.label;dom.entryUsername.value=it.username||"";dom.entryValue.value=it.value||"";dom.editorArea.style.display="block";dom.entryLabel.focus();}}else if(c.dataset.delete){const id=c.dataset.delete;if(confirm("Delete this entry?")){vault.entries=vault.entries.filter(x=>x.id!==id);render();}}});
+dom.toggleMask.addEventListener("change",()=>render());
+dom.btnSave.addEventListener("click",async()=>{const pass=dom.master.value;if(!pass){notify("Enter passphrase");return;}try{const enc=await encryptObject(vault,pass);localStorage.setItem(VAULT_KEY,JSON.stringify(enc));notify("Vault saved");}catch(e){notify("Save failed");}});
+dom.btnLoad.addEventListener("click",async()=>{const pass=dom.master.value;if(!pass){notify("Enter passphrase");return;}try{const raw=localStorage.getItem(VAULT_KEY);if(!raw){notify("No vault found");return;}const enc=JSON.parse(raw);vault=await decryptObject(enc,pass);render();notify("Vault loaded");}catch(e){notify("Load failed");}});
+dom.btnExport.addEventListener("click",async()=>{const pass=dom.master.value;if(!pass){notify("Enter passphrase");return;}try{const enc=await encryptObject(vault,pass);const blob=new Blob([JSON.stringify(enc)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="vault.enc.json";a.click();URL.revokeObjectURL(url);}catch(e){notify("Export failed");}});
+dom.importFile.addEventListener("change",async(ev)=>{const f=ev.target.files?.[0];if(!f)return;const txt=await f.text();try{const enc=JSON.parse(txt);const pass=dom.master.value;if(!pass){notify("Enter passphrase");return;}vault=await decryptObject(enc,pass);render();notify("Imported vault");}catch(e){notify("Import failed");}});
+dom.btnClear.addEventListener("click",()=>{if(confirm("Clear vault in memory?")){vault={entries:[],meta:{version:1}};render();}});
+render();
+(function seedExample(){if(vault.entries.length) return;vault.entries.push({id:uid(),label:"Example Entry",username:"example@domain.com",value:"••••••••",created:Date.now()});render();})();
+</script>
+</body>
+</html>
+
